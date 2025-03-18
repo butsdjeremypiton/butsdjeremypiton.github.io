@@ -1,101 +1,241 @@
-html{
-    color:  yellow
-}
-
+/* Style global pour le corps de la page */
 body {
-    background: linear-gradient(to right, navy, blue);
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    margin: 0; /* Supprime les marges par défaut */
+    font-family: Arial, sans-serif; /* Définit la police principale */
+    background: linear-gradient(to bottom, #1e90ff, #87cefa); /* Dégradé du haut vers le bas */
+    color: #fff; /* Couleur du texte en blanc */
+    min-height: 100vh; /* Assure que le dégradé couvre toute la hauteur de la page */
 }
 
-header {
-    background-color: linear-gradient(to right, #800000, #FF0000);
-    padding: 15px;
+/* Style pour la barre de navigation */
+.navbar {
+    display: flex; /* Utilise un conteneur flex pour aligner les éléments */
+    justify-content: space-between; /* Espace entre les éléments */
+    align-items: center; /* Aligne les éléments verticalement au centre */
+    padding: 20px 30px; /* Augmente les marges internes */
+    background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+    position: sticky; /* La barre reste visible en haut lors du défilement */
+    top: 0; /* Positionne la barre en haut de la page */
+    z-index: 1000; /* Assure que la barre est au-dessus des autres éléments */
+    height: 50px; /* Augmente la hauteur de la barre de navigation */
+}
+
+.navbar.side {
+    flex-direction: column; /* Dispose les éléments verticalement */
+    width: 200px; /* Largeur de la barre latérale */
+    height: 100vh; /* Prend toute la hauteur de la page */
+    position: fixed; /* Fixe la barre sur le côté */
+    top: 0; /* Positionne en haut */
+    left: 0; /* Positionne à gauche */
+    background-color: rgba(0, 0, 0, 0.9); /* Fond légèrement plus sombre */
+}
+
+.navbar.side .nav-links {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 20px;
-    padding-right: 20px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 10;
+    flex-direction: column; /* Dispose les liens verticalement */
+    align-items: flex-start; /* Aligne les liens à gauche */
+    padding: 10px;
+    margin-top: 20px; /* Remonte les liens dans la navbar latérale */
 }
 
-nav ul {
-    list-style: none;
-    padding: 0;
+.navbar.side .nav-links a {
+    margin: 10px 0; /* Espacement vertical entre les liens */
 }
 
-nav ul li {
-    display: inline;
-    margin: 0 1rem;
+.navbar .logo a {
+    font-size: 1.5em; /* Taille agrandie pour le titre de la navbar */
+    font-weight: bold; /* Met le titre en gras */
 }
 
-nav ul li a {
-    text-decoration: none;
+/* Style pour les liens de navigation */
+.navbar a {
+    color: #fff; /* Couleur du texte en blanc */
+    text-decoration: none; /* Supprime le soulignement par défaut */
+    margin: 0 15px; /* Ajoute un espacement horizontal entre les liens */
+    font-weight: bold; /* Met le texte en gras */
 }
 
-section {
-    padding: 2rem;
-    margin: 1rem 0;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+/* Effet au survol des liens */
+.navbar a:hover {
+    color: #87cefa; /* Change la couleur du texte pour correspondre au fond */
+    text-decoration: none; /* Supprime le soulignement au survol */
+}
+
+/* Style pour la section "hero" */
+.hero {
+    text-align: center; /* Centre le texte horizontalement */
+    padding: 100px 20px; /* Ajoute des marges internes */
+}
+
+/* Style pour le titre principal */
+.hero h1 {
+    font-size: 3em; /* Taille de police importante pour le titre */
+    margin-bottom: 20px; /* Espacement sous le titre */
+}
+
+/* Style pour le paragraphe */
+.hero p {
+    font-size: 1.2em; /* Taille de police légèrement augmentée */
+}
+
+.projects-wrapper {
+    display: grid; /* Utilise un conteneur en grille */
+    grid-template-columns: repeat(2, 1fr); /* Deux colonnes de taille égale */
+    gap: 20px; /* Ajoute un espacement entre les projets */
+    margin: 20px auto; /* Centre le conteneur sur la page */
+    max-width: 800px; /* Limite la largeur du conteneur */
 }
 
 .project {
-    margin-bottom: 1rem;
+    padding: 20px; /* Ajoute des marges internes */
+    border: 2px solid #fff; /* Ajoute un encadrement blanc */
+    border-radius: 10px; /* Arrondit les coins */
+    background-color: rgba(255, 255, 255, 0.1); /* Ajoute un fond semi-transparent */
+    text-align: center; /* Centre le texte */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition fluide pour l'effet */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ajoute un effet de relief */
+    opacity: 0; /* Initial state for animation */
+    transform: translateX(-50px); /* Start position for left-to-right animation */
+    animation: fadeInLeft 1s ease forwards; /* Default animation */
 }
 
-form {
-    display: flex;
-    flex-direction: column;
+.project:nth-child(even) {
+    transform: translateX(50px); /* Start position for right-to-left animation */
+    animation: fadeInRight 1s ease forwards; /* Alternate animation */
 }
 
-form label {
-    margin-bottom: 0.5rem;
+.project:nth-child(1) { animation-delay: 0.2s; }
+.project:nth-child(2) { animation-delay: 0.4s; }
+.project:nth-child(3) { animation-delay: 0.6s; }
+.project:nth-child(4) { animation-delay: 0.8s; }
+.project:nth-child(5) { animation-delay: 1s; }
+.project:nth-child(6) { animation-delay: 1.2s; }
+
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-form input, form textarea {
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+@keyframes fadeInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-form button {
-    padding: 0.5rem;
-    border: none;
-    border-radius: 4px;
-    background-color: #333;
-    color: #fff;
-    cursor: pointer;
+.project:hover {
+    transform: scale(1.05); /* Agrandit légèrement le projet au survol */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Accentue l'effet de relief au survol */
 }
 
-form button:hover {
-    background-color: #555;
+.cv-container {
+    margin: 20px auto; /* Centre le conteneur */
+    max-width: 800px; /* Limite la largeur */
+    border: 2px solid #fff; /* Ajoute un encadrement blanc */
+    border-radius: 10px; /* Arrondit les coins */
+    overflow: hidden; /* Cache tout débordement */
+    background-color: rgba(255, 255, 255, 0.1); /* Fond semi-transparent */
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto; /* Centrer le tableau */
+.contact-info {
+    text-align: center; /* Centre le texte */
+    margin: 20px auto; /* Ajoute un espacement autour */
+    max-width: 600px; /* Limite la largeur */
+    background-color: rgba(255, 255, 255, 0.1); /* Fond semi-transparent */
+    padding: 20px; /* Ajoute des marges internes */
+    border: 2px solid #fff; /* Ajoute un encadrement blanc */
+    border-radius: 10px; /* Arrondit les coins */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ajoute un effet de relief */
+    transition: box-shadow 0.3s ease; /* Transition fluide pour le survol */
 }
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center; /* Centrer le contenu des cellules */
-    border: none;
+
+.contact-info a {
+    color: #87cefa; /* Couleur des liens */
+    text-decoration: none; /* Supprime le soulignement */
 }
-th {
-    background-color: #f2f2f2;
+
+.contact-info a:hover {
+    text-decoration: underline; /* Ajoute un soulignement au survol */
 }
-.project-img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
+
+.contact-info:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Accentue l'effet de relief au survol */
+    transform: none; /* Supprime l'effet de grossissement */
+}
+
+.page-title {
+    text-align: center; /* Centre le texte */
+    margin: 20px 0; /* Ajoute un espacement vertical */
+    font-size: 2em; /* Taille de police pour les titres */
+}
+
+.falling-text {
+    animation: fall 1.5s ease-out; /* Applique l'animation "fall" */
+}
+
+.falling {
+    animation: fall 1.5s ease-out; /* Applique l'animation "fall" */
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-100px); /* Commence au-dessus de la position initiale */
+        opacity: 0; /* Invisible au départ */
+    }
+    100% {
+        transform: translateY(0); /* Arrive à la position initiale */
+        opacity: 1; /* Complètement visible */
+    }
+}
+
+/* Suppression de l'ajustement pour la navbar horizontale */
+.navbar .nav-links {
+    display: flex; /* Aligne les liens horizontalement */
+    align-items: center; /* Centre les liens verticalement */
+    margin-top: 0; /* Réinitialise la marge */
+}
+
+.about-container {
+    text-align: center; /* Centre le texte */
+    margin: 20px auto; /* Centre le conteneur horizontalement */
+    max-width: 600px; /* Limite la largeur */
+    background-color: rgba(255, 255, 255, 0.1); /* Fond semi-transparent */
+    padding: 20px; /* Ajoute des marges internes */
+    border: 2px solid #fff; /* Ajoute un encadrement blanc */
+    border-radius: 10px; /* Arrondit les coins */
+}
+
+.bilan-container {
+    text-align: center; /* Centre le texte */
+    margin: 20px auto; /* Centre le conteneur horizontalement */
+    max-width: 600px; /* Limite la largeur */
+    background-color: rgba(255, 255, 255, 0.1); /* Fond semi-transparent */
+    padding: 20px; /* Ajoute des marges internes */
+    border: 2px solid #fff; /* Ajoute un encadrement blanc */
+    border-radius: 10px; /* Arrondit les coins */
+}
+
+.about-container,
+.bilan-container,
+.contact-info,
+.cv-container {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ajoute un effet de relief */
+    transition: box-shadow 0.3s ease; /* Transition fluide pour le survol */
+}
+
+.about-container:hover,
+.bilan-container:hover,
+.contact-info:hover,
+.cv-container:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Accentue l'effet de relief au survol */
 }

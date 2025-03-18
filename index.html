@@ -1,37 +1,30 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr"> <!-- Déclare le type de document et la langue principale (français) -->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Portfolio</title>
-    <link rel="stylesheet" href="./styles/styles.css">
+    <meta charset="UTF-8"> <!-- Définit l'encodage des caractères en UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Assure une mise en page responsive -->
+    <title>Portfolio Universitaire</title> <!-- Titre de la page affiché dans l'onglet du navigateur -->
+    <link rel="stylesheet" href="./styles/styles.css"> <!-- Importe le fichier de styles CSS -->
 </head>
 <body>
-    <header>
-        <h1>Bienvenue sur mon portfolio</h1>
-        <nav>
-            <ul>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="./scripts/about.html">À propos</a></li>
-                <li><a href="./scripts/test.html">Projets</a></li>
-                <li><a href="./scripts/bilan.html">Bilan</a></li>
-            </ul>
-        </nav>
-    </header>
-    <div>
-        <section id="contact">
-            <h2>Contactez-moi</h2>
-            <form id="contact-form">
-                <label for="name">Nom:</label>
-                <input type="text" id="name" name="name" required>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" required></textarea>
-                <button type="submit">Envoyer</button>
-            </form>
-        </section>
-        <script src="scripts.js"></script>
+    <!-- Barre de navigation -->
+    <div class="navbar">
+        <div class="logo">
+            <a href="./index.html">Jérémy Piton</a> <!-- Lien vers index.html -->
+        </div>
+        <div class="nav-links">
+            <a href="./scripts/about.html">À propos</a> <!-- Lien vers la section "À propos" -->
+            <a href="./scripts/projects.html">Projets</a> <!-- Lien vers la section "Projets" -->
+            <a href="./scripts/contact.html">Contact</a> <!-- Lien vers la section "Contact" -->
+            <a href="./scripts/bilan.html">Bilan</a> <!-- Lien vers la section "Bilan" -->
+        </div>
     </div>
-    </body>
+
+    <!-- Section d'accueil (hero) -->
+    <div class="hero falling"> <!-- Ajout de la classe "falling" -->
+        <h1>Bienvenue sur mon Portfolio</h1> <!-- Titre principal -->
+        <p>Découvrez mes projets, mes compétences et mon parcours académique.</p> <!-- Description -->
+    </div>
+
+</body>
 </html>
