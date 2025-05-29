@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jérémy Piton - Mes projets</title>
+    <style>
+        /* Reset et base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background-color: #1e40af;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #60a5fa;
+        }
+
+        /* Hero section */
+        .hero {
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(30, 64, 175, 0.1) 0%, transparent 70%);
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #1e40af;
+            animation: slideInFromTop 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+            color: #4b5563;
+            animation: slideInFromBottom 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideInFromTop {
+            0% { opacity: 0; transform: translateY(-50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInFromBottom {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Features grid */
+        .features {
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Feature card */
+        .feature-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Bouton d'ouverture détails */
+        .open-details-btn {
+            padding: 0.5rem 1rem;
+            background-color: #1e40af;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+
+        .open-details-btn:hover {
+            background-color: #3b82f6;
+        }
+
+        /* Overlay pour la modale */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        .modal-overlay.active {
+            display: block;
+        }
+
+        /* Contenu détails projet - modale */
+        .project-details {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            z-index: 10000;
+            max-width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            width: 700px;
+        }
+
+        .project-details.active {
+            display: block;
+        }
+
+        /* Bouton fermer modale */
+        .close-details-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #f3f4f6;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-details-btn:hover {
+            background: #e5e7eb;
+            color: #1e40af;
+        }
+
+        /* Layout des détails */
+        .project-content {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .project-left,
+        .project-right {
+            flex: 1;
+        }
+
+        .project-left h4,
+        .project-right h4 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .project-right ul {
+            margin-bottom: 1rem;
+            padding-left: 1.2rem;
+        }
+
+        .project-right li {
+            margin-bottom: 0.3rem;
+        }
+
+        .project-right a {
+            color: #1e40af;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        .project-details h3 {
+            color: #1e40af;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .project-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .project-details {
+                width: 95%;
+                max-height: 90vh;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1e3a8a;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #60a5fa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Overlay pour les modales -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Jérémy <span>Piton</span></a></div>
+            <div class="nav-links">
+                <a href="./about.html">À propos</a>
+                <a href="./projet.html" style="color: #60a5fa;">Projets</a>
+                <a href="./bilan.html">Bilan</a>
+                <a href="./contact.html">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Mes projets</h1>
+            <p>Découvrez les projets réalisés dans le cadre de ma formation en BUT Science des données.</p>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <h3>📊 Création d'un reporting</h3>
+            <p>Conception de tableaux de bord pour le suivi de performances.</p>
+            <button class="open-details-btn">Voir les détails du projet</button>
+        </div>
+
+        <div class="feature-card">
+            <h3>🌍 Présentation en anglais d'un territoire</h3>
+            <p>Exposé en anglais présentant un territoire à la fois sous son angle économique et culturel.</p>
+            <button class="open-details-btn">Voir les détails du projet</button>
+        </div>
+
+        <div class="feature-card">
+            <h3>🏢 Production de données en entreprise</h3>
+            <p>Découverte des systèmes d'information d'entreprise et collecte de données réelles en contexte professionnel.</p>
+            <button class="open-details-btn">Voir les détails du projet</button>
+        </div>
+
+        <div class="feature-card">
+            <h3>📁 Écriture et lecture de fichiers de données</h3>
+            <p>Manipulation de fichiers CSV, Excel, JSON avec Python pour automatiser les flux de données.</p>
+            <button class="open-details-btn">Voir les détails du projet</button>
+        </div>
+
+        <div class="feature-card">
+            <h3>📝 Mise en œuvre d'une enquête</h3>
+            <p>Création d'un questionnaire, diffusion, collecte et analyse statistique des résultats.</p>
+            <button class="open-details-btn">Voir les détails du projet</button>
+        </div>
+
+        <div class="feature-card">
+            <h3>📋 Préparation et synthèse d'un tableau de données</h3>
+            <p>Nettoyage, filtrage et traitement de données pour une analyse exploratoire pertinente.</p>
+            <button class="open-details-btn">Voir les détails du projet</button>
+        </div>
+
+        <div class="feature-card">
+            <h3>🗃️ Conception et implémentation d'une base de données</h3>
+            <p>Modélisation MERISE ou UML, création de schémas SQL, et requêtage avec PostgreSQL ou MySQL.</p>
+            <button class="open-details-btn">Voir les détails du projet</button>
+        </div>
+
+        <div class="feature-card">
+            <h3>🔢 Régression sur des données réelles</h3>
+            <p>Modélisation d'une relation entre variables à l'aide de régression linéaire simple ou multiple.</p>
+            <button class="open-details-btn">Voir les détails du projet</button>
+        </div>
+
+        <div class="feature-card">
+            <h3>📈 Estimation par échantillonnage</h3>
+            <p>Utilisation de méthodes statistiques pour estimer des moyennes ou proportions avec intervalles de confiance.</p>
+            <button class="open-details-btn">Voir les détails du projet</button>
+        </div>
+
+        <div class="feature-card">
+            <h3>📊 Dataviz (concours)</h3>
+            <p>Participation à un concours de datavisualisation en équipe, avec création de graphiques interactifs et originaux.</p>
+            <button class="open-details-btn">Voir les détails du projet</button>
+        </div>
+
+        <div class="feature-card">
+            <h3>📊 Indicateurs de performance</h3>
+            <p>Construction d'indicateurs quantitatifs et qualitatifs adaptés à un besoin métier.</p>
+            <button class="open-details-btn">Voir les détails du projet</button>
+        </div>
+
+        <div class="feature-card">
+            <h3>📉 Analyse, reporting et datavisualisation</h3>
+            <p>Réalisation d'un projet complet incluant préparation des données, analyse statistique et dataviz.</p>
+            <button class="open-details-btn">Voir les détails du projet</button>
+        </div>
+
+        <div class="feature-card">
+            <h3>🧾 Portfolio</h3>
+            <p>Création d'un site web personnel pour présenter mes compétences, projets et expériences professionnelles.</p>
+            <button class="open-details-btn">Voir les détails du projet</button>
+        </div>
+    </section>
+
+    <!-- Modales pour chaque projet -->
+    <div class="project-details" id="modal-0">
+        <button class="close-details-btn">✕</button>
+        <h3>📊 Création d'un reporting</h3>
+        <div class="project-content">
+            <div class="project-left">
+                <h4>Description</h4>
+                <p>Projet réalisé avec Power BI pour créer des tableaux de bord interactifs permettant le suivi de performances en temps réel. Intégration de données provenant de multiples sources et automatisation du processus de mise à jour.</p>
+            </div>
+            <div class="project-right">
+                <h4>Compétences acquises</h4>
+                <ul>
+                    <li>Maîtrise de Power BI et de ses fonctionnalités avancées</li>
+                    <li>Compréhension des enjeux du reporting d'entreprise</li>
+                    <li>Automatisation de rapports et mise à jour de données</li>
+                    <li>Création de visualisations impactantes</li>
+                </ul>
+                <h4>Livrables</h4>
+                <a href="#" target="_blank">Télécharger le rapport (PDF)</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-details" id="modal-1">
+        <button class="close-details-btn">✕</button>
+        <h3>🌍 Présentation en anglais d'un territoire</h3>
+        <div class="project-content">
+            <div class="project-left">
+                <h4>Description</h4>
+                <p>Réalisation d'un exposé en anglais sur un territoire spécifique, analysant ses aspects économiques, culturels et géographiques. Recherche documentaire approfondie et présentation orale devant un jury.</p>
+            </div>
+            <div class="project-right">
+                <h4>Compétences acquises</h4>
+                <ul>
+                    <li>Expression orale en anglais professionnel</li>
+                    <li>Recherche et synthèse d'informations géoéconomiques</li>
+                    <li>Analyse territoriale et contextuelle</li>
+                    <li>Techniques de présentation et de communication</li>
+                </ul>
+                <h4>Livrables</h4>
+                <a href="#" target="_blank">Voir la présentation</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-details" id="modal-2">
+        <button class="close-details-btn">✕</button>
+        <h3>🏢 Production de données en entreprise</h3>
+        <div class="project-content">
+            <div class="project-left">
+                <h4>Description</h4>
+                <p>Stage en entreprise focalisé sur la découverte des systèmes d'information et la collecte de données réelles. Analyse des processus de production de données et de leur utilisation dans la prise de décision.</p>
+            </div>
+            <div class="project-right">
+                <h4>Compétences acquises</h4>
+                <ul>
+                    <li>Compréhension des SI d'entreprise</li>
+                    <li>Collecte et validation de données terrain</li>
+                    <li>Analyse des processus métier</li>
+                    <li>Intégration dans un environnement professionnel</li>
+                </ul>
+                <h4>Livrables</h4>
+                <a href="#" target="_blank">Rapport de stage (PDF)</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-details" id="modal-3">
+        <button class="close-details-btn">✕</button>
+        <h3>📁 Écriture et lecture de fichiers de données</h3>
+        <div class="project-content">
+            <div class="project-left">
+                <h4>Description</h4>
+                <p>Développement de scripts Python pour automatiser la manipulation de fichiers de données dans différents formats (CSV, Excel, JSON). Création d'une pipeline de traitement automatisé.</p>
+            </div>
+            <div class="project-right">
+                <h4>Compétences acquises</h4>
+                <ul>
+                    <li>Programmation Python avancée</li>
+                    <li>Manipulation de fichiers (pandas, openpyxl)</li>
+                    <li>Automatisation de flux de données</li>
+                    <li>Gestion d'erreurs et validation</li>
+                </ul>
+                <h4>Livrables</h4>
+                <a href="#" target="_blank">Code source GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-details" id="modal-4">
+        <button class="close-details-btn">✕</button>
+        <h3>📝 Mise en œuvre d'une enquête</h3>
+        <div class="project-content">
+            <div class="project-left">
+                <h4>Description</h4>
+                <p>Conception complète d'une enquête statistique : élaboration du questionnaire, définition de l'échantillon, diffusion, collecte des réponses et analyse statistique des résultats obtenus.</p>
+            </div>
+            <div class="project-right">
+                <h4>Compétences acquises</h4>
+                <ul>
+                    <li>Méthodologie d'enquête statistique</li>
+                    <li>Conception de questionnaires</li>
+                    <li>Techniques d'échantillonnage</li>
+                    <li>Analyse statistique descriptive et inférentielle</li>
+                </ul>
+                <h4>Livrables</h4>
+                <a href="#" target="_blank">Rapport d'enquête (PDF)</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-details" id="modal-5">
+        <button class="close-details-btn">✕</button>
+        <h3>📋 Préparation et synthèse d'un tableau de données</h3>
+        <div class="project-content">
+            <div class="project-left">
+                <h4>Description</h4>
+                <p>Nettoyage et préparation d'un jeu de données complexe : détection des valeurs aberrantes, traitement des données manquantes, normalisation et création d'un tableau synthétique pour l'analyse.</p>
+            </div>
+            <div class="project-right">
+                <h4>Compétences acquises</h4>
+                <ul>
+                    <li>Data cleaning et preprocessing</li>
+                    <li>Détection d'anomalies dans les données</li>
+                    <li>Techniques de normalisation</li>
+                    <li>Analyse exploratoire de données (EDA)</li>
+                </ul>
+                <h4>Livrables</h4>
+                <a href="#" target="_blank">Notebook d'analyse</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-details" id="modal-6">
+        <button class="close-details-btn">✕</button>
+        <h3>🗃️ Conception et implémentation d'une base de données</h3>
+        <div class="project-content">
+            <div class="project-left">
+                <h4>Description</h4>
+                <p>Conception complète d'une base de données relationnelle : modélisation conceptuelle (MERISE), création du schéma physique, implémentation en PostgreSQL et développement de requêtes complexes.</p>
+            </div>
+            <div class="project-right">
+                <h4>Compétences acquises</h4>
+                <ul>
+                    <li>Modélisation MERISE et UML</li>
+                    <li>Conception de schémas relationnels</li>
+                    <li>SQL avancé (PostgreSQL/MySQL)</li>
+                    <li>Optimisation de requêtes</li>
+                </ul>
+                <h4>Livrables</h4>
+                <a href="#" target="_blank">Schéma de base de données</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-details" id="modal-7">
+        <button class="close-details-btn">✕</button>
+        <h3>🔢 Régression sur des données réelles</h3>
+        <div class="project-content">
+            <div class="project-left">
+                <h4>Description</h4>
+                <p>Modélisation prédictive utilisant la régression linéaire sur un jeu de données réel. Analyse de la relation entre variables, validation du modèle et interprétation des résultats statistiques.</p>
+            </div>
+            <div class="project-right">
+                <h4>Compétences acquises</h4>
+                <ul>
+                    <li>Régression linéaire simple et multiple</li>
+                    <li>Validation de modèles statistiques</li>
+                    <li>Interprétation des coefficients</li>
+                    <li>Diagnostic de régression</li>
+                </ul>
+                <h4>Livrables</h4>
+                <a href="#" target="_blank">Analyse de régression (R/Python)</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-details" id="modal-8">
+        <button class="close-details-btn">✕</button>
+        <h3>📈 Estimation par échantillonnage</h3>
+        <div class="project-content">
+            <div class="project-left">
+                <h4>Description</h4>
+                <p>Application de méthodes d'échantillonnage pour estimer des paramètres de population. Calcul d'intervalles de confiance et tests d'hypothèses sur des données d'enquête.</p>
+            </div>
+            <div class="project-right">
+                <h4>Compétences acquises</h4>
+                <ul>
+                    <li>Techniques d'échantillonnage</li>
+                    <li>Calcul d'intervalles de confiance</li>
+                    <li>Tests d'hypothèses statistiques</li>
+                    <li>Estimation de paramètres</li>
+                </ul>
+                <h4>Livrables</h4>
+                <a href="#" target="_blank">Rapport statistique</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-details" id="modal-9">
+        <button class="close-details-btn">✕</button>
+        <h3>📊 Dataviz (concours)</h3>
+        <div class="project-content">
+            <div class="project-left">
+                <h4>Description</h4>
+                <p>Participation en équipe à un concours de datavisualisation. Création de graphiques interactifs innovants utilisant D3.js et Tableau pour présenter des données complexes de manière engageante.</p>
+            </div>
+            <div class="project-right">
+                <h4>Compétences acquises</h4>
+                <ul>
+                    <li>Datavisualisation avancée (D3.js, Tableau)</li>
+                    <li>Design thinking appliqué aux données</li>
+                    <li>Travail en équipe et gestion de projet</li>
+                    <li>Présentation et storytelling</li>
+                </ul>
+                <h4>Livrables</h4>
+                <a href="#" target="_blank">Visualisation interactive</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-details" id="modal-10">
+        <button class="close-details-btn">✕</button>
+        <h3>📊 Indicateurs de performance</h3>
+        <div class="project-content">
+            <div class="project-left">
+                <h4>Description</h4>
+                <p>Développement d'un système d'indicateurs de performance (KPI) adapté aux besoins métier d'une organisation. Définition, calcul et mise en place de tableaux de bord de suivi.</p>
+            </div>
+            <div class="project-right">
+                <h4>Compétences acquises</h4>
+                <ul>
+                    <li>Définition et construction de KPI</li>
+                    <li>Analyse des besoins métier</li>
+                    <li>Tableaux de bord opérationnels</li>
+                    <li>Mesure de performance organisationnelle</li>
+                </ul>
+                <h4>Livrables</h4>
+                <a href="#" target="_blank">Dashboard KPI</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-details" id="modal-11">
+        <button class="close-details-btn">✕</button>
+        <h3>📉 Analyse, reporting et datavisualisation</h3>
+        <div class="project-content">
+            <div class="project-left">
+                <h4>Description</h4>
+                <p>Projet intégrateur combinant préparation des données, analyse statistique approfondie, création de rapports automatisés et développement de visualisations interactives pour un cas d'usage réel.</p>
+            </div>
+            <div class="project-right">
+                <h4>Compétences acquises</h4>
+                <ul>
+                    <li>Pipeline complète d'analyse de données</li>
+                    <li>Reporting automatisé</li>
+                    <li>Visualisations interactives avancées</li>
+                    <li>Communication de résultats</li>
+                </ul>
+                <h4>Livrables</h4>
+                <a href="#" target="_blank">Projet complet</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-details" id="modal-12">
+        <button class="close-details-btn">✕</button>
+        <h3>🧾 Portfolio</h3>
+        <div class="project-content">
+            <div class="project-left">
+                <h4>Description</h4>
+                <p>Conception et développement de ce site web portfolio personnel en HTML, CSS et JavaScript. Présentation structurée de mes compétences, projets et expériences avec un design moderne et responsive.</p>
+            </div>
+            <div class="project-right">
+                <h4>Compétences acquises</h4>
+                <ul>
+                    <li>Développement web front-end</li>
+                    <li>Design responsive et UX/UI</li>
+                    <li>Communication visuelle</li>
+                    <li>Gestion de projet personnel</li>
+                </ul>
+                <h4>Livrables</h4>
+                <a href="#" target="_blank">Code source du portfolio</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Jérémy Piton - Tous droits réservés</p>
+        <p>Portfolio personnel - Étudiant en Science des données</p>
+        <div class="social-links">
+            <a href="#">LinkedIn</a>
+            <a href="#">GitHub</a>
+            <a href="mailto:jeremy.piton@example.com">Email</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            const overlay = document.getElementById('modalOverlay');
+            
+            cards.forEach((card, index) => {
+                const button = card.querySelector('.open-details-btn');
+                const modal = document.getElementById(`modal-${index}`);
+                const closeBtn = modal ? modal.querySelector('.close-details-btn') : null;
+                
+                if (button && modal && closeBtn) {
+                    // Ouvrir la modale
+                    button.addEventListener('click', function() {
+                        modal.classList.add('active');
+                        overlay.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    });
+                    
+                    // Fermer avec le bouton X
+                    closeBtn.addEventListener('click', function() {
+                        modal.classList.remove('active');
+                        overlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    });
+                    
+                    // Fermer en cliquant sur l'overlay
+                    overlay.addEventListener('click', function() {
+                        modal.classList.remove('active');
+                        overlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    });
+                    
+                    // Fermer avec Escape
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape' && modal.classList.contains('active')) {
+                            modal.classList.remove('active');
+                            overlay.classList.remove('active');
+                            document.body.style.overflow = '';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
