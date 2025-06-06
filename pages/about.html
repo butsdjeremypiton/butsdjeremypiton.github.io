@@ -230,6 +230,15 @@
             color: white;
         }
 
+        .basketball-image {
+            width: 100%;
+            height: 200px;
+            background: url('../documents/basketball.jpg') center/cover;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
         .basketball-court {
             position: absolute;
             top: 0;
@@ -318,32 +327,10 @@
         .gaming-setup {
             width: 100%;
             height: 200px;
-            background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=200&fit=crop&crop=center') center/cover;
+            background: url('../documents/JeuxVideos.png') center/cover;
             border-radius: 10px;
             margin-bottom: 1.5rem;
             position: relative;
-        }
-
-        .gaming-lights {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #00ff00;
-            box-shadow: 
-                0 0 10px #00ff00,
-                30px 0 0 #ff0000,
-                30px 0 10px #ff0000,
-                60px 0 0 #0000ff,
-                60px 0 10px #0000ff;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
         }
 
         .passion-card h3 {
@@ -534,11 +521,13 @@
 
         <div class="passions-grid">
             <div class="passion-card basketball-card animate-on-scroll">
-                <div class="basketball-court"></div>
+                <div class="basketball-image">
+                    <div class="basketball-court"></div>
+                </div>
                 <div class="basketball-animation"></div>
                 <h3>🏀 Basketball</h3>
                 <p>Le basket est bien plus qu'un sport pour moi, c'est une école de vie. Chaque match m'enseigne la stratégie, le travail d'équipe et la persévérance. L'analyse tactique du jeu rejoint d'ailleurs ma passion pour l'analyse de données !</p>
-                <p>J'apprécie particulièrement l'aspect mental du basketball : lire le jeu, anticiper les mouvements adverses, et prendre des décisions rapides sous pression.</p>
+                <p>J'apprécie particulièrement l'aspect mental du basketball : lire le jeu, anticiper les mouvements adverses et prendre des décisions rapides sous pression.</p>
                 <div class="passion-stats">
                     <div class="stat">
                         <span class="stat-number">1</span>
@@ -569,11 +558,9 @@
             </div>
 
             <div class="passion-card gaming-card animate-on-scroll">
-                <div class="gaming-setup">
-                    <div class="gaming-lights"></div>
-                </div>
+                <div class="gaming-setup"></div>
                 <h3>🎮 Jeux vidéo</h3>
-                <p>Les jeux vidéo sont ma passion depuis l'enfance. Au-delà du divertissement, ils nourrissent ma créativité, ma capacité de résolution de problèmes et ma compréhension des systèmes complexes.</p>
+                <p>Les jeux vidéo sont ma passion depuis quelques années. Au-delà du divertissement, ils nourrissent ma créativité, ma capacité de résolution de problèmes et ma compréhension des systèmes complexes.</p>
                 <p>Je suis particulièrement attiré par les jeux de stratégie et les RPG qui demandent réflexion et planification. C'est fascinant de voir comment les mécaniques de jeu peuvent s'appliquer à des problématiques réelles !</p>
                 <div class="passion-stats">
                     <div class="stat">
@@ -674,35 +661,6 @@
             if (hero) {
                 hero.style.transform = `translateY(${rate}px)`;
             }
-        });
-
-        // Dynamic bike wheel rotation effect
-        const bikeImage = document.querySelector('.bike-image');
-        let rotation = 0;
-
-        bikeImage.addEventListener('mouseenter', function() {
-            const rotateInterval = setInterval(() => {
-                rotation += 10;
-                this.style.transform = `rotate(${rotation}deg)`;
-                
-                if (rotation >= 360) {
-                    rotation = 0;
-                    clearInterval(rotateInterval);
-                    this.style.transform = 'rotate(0deg)';
-                }
-            }, 50);
-        });
-
-        // Gaming card interactive lights
-        const gamingCard = document.querySelector('.gaming-card');
-        gamingCard.addEventListener('mouseenter', function() {
-            const lights = this.querySelector('.gaming-lights');
-            lights.style.animation = 'pulse 0.5s infinite';
-        });
-
-        gamingCard.addEventListener('mouseleave', function() {
-            const lights = this.querySelector('.gaming-lights');
-            lights.style.animation = 'pulse 2s infinite';
         });
     </script>
 </body>
