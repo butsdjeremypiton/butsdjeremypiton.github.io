@@ -61,16 +61,130 @@
             color: #60a5fa;
         }
 
+        .hero {
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(30, 64, 175, 0.1) 0%, transparent 70%);
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #1e40af;
+            animation: slideInFromTop 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+            color: #4b5563;
+            animation: slideInFromBottom 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideInFromTop {
+            0% { opacity: 0; transform: translateY(-50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInFromBottom {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
         .main-content {
             max-width: 1400px;
             margin: 0 auto;
             padding: 4rem 2rem;
         }
 
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+        /* Section CV */
+        .cv-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow: hidden;
+            margin-bottom: 4rem;
+        }
+
+        .cv-header {
+            background-color: #1e40af;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .cv-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cv-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .download-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            background-color: white;
+            color: #1e40af;
+        }
+
+        .cv-content {
+            padding: 2rem;
+        }
+
+        .pdf-embed {
+            width: 100%;
+            height: 800px;
+            border: none;
+            border-radius: 8px;
+        }
+
+        /* Section Contact */
+        .contact-section {
+            display: flex;
+            justify-content: center;
             margin-bottom: 4rem;
         }
 
@@ -79,6 +193,8 @@
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            max-width: 600px;
+            width: 100%;
         }
 
         .contact-info h2 {
@@ -132,6 +248,24 @@
 
         .info-text a:hover {
             text-decoration: underline;
+        }
+
+        .availability {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #dcfce7;
+            border-left: 4px solid #16a34a;
+            border-radius: 5px;
+        }
+
+        .availability h3 {
+            color: #15803d;
+            margin-bottom: 0.5rem;
+        }
+
+        .availability p {
+            color: #166534;
+            line-height: 1.5;
         }
 
         .contact-form {
@@ -198,80 +332,6 @@
             background-color: #1c3879;
         }
 
-        .availability {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background-color: #dcfce7;
-            border-left: 4px solid #16a34a;
-            border-radius: 5px;
-        }
-
-        .availability h3 {
-            color: #15803d;
-            margin-bottom: 0.5rem;
-        }
-
-        .availability p {
-            color: #166534;
-            line-height: 1.5;
-        }
-
-        /* Styles pour le CV */
-        .cv-section {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            overflow: hidden;
-            margin-bottom: 2rem;
-        }
-
-        .cv-header {
-            background-color: #1e40af;
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .cv-header h2 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .cv-header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .download-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background-color: rgba(255,255,255,0.2);
-            color: white;
-            border: 2px solid white;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .download-btn:hover {
-            background-color: white;
-            color: #1e40af;
-        }
-
-        .cv-content {
-            padding: 2rem;
-        }
-
-        .pdf-embed {
-            width: 100%;
-            height: 800px;
-            border: none;
-        }
-
         footer {
             background-color: #1e3a8a;
             color: white;
@@ -303,17 +363,11 @@
         }
 
         @media (max-width: 768px) {
-            .content-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+            .contact-section {
+                padding: 0 1rem;
             }
             
-            .cv-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            .contact-hero h1 {
+            .hero h1 {
                 font-size: 2rem;
             }
             
@@ -333,74 +387,21 @@
                 display: inline-block;
             }
         }
-
-        .hero {
-            padding: 4rem 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(30, 64, 175, 0.1) 0%, transparent 70%);
-            animation: float 20s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #1e40af;
-            animation: slideInFromTop 1s ease-out;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            max-width: 800px;
-            margin-bottom: 2rem;
-            color: #4b5563;
-            animation: slideInFromBottom 1s ease-out 0.3s both;
-        }
-
-        @keyframes slideInFromTop {
-            0% { opacity: 0; transform: translateY(-50px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideInFromBottom {
-            0% { opacity: 0; transform: translateY(50px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
     </style>
 </head>
 <body>
     <header>
         <nav>
-            <div class="logo"><a href="../index.html" style="text-decoration: none; color: inherit;">Jérémy <span>Piton</span></a></div>
+            <div class="logo">
+                <a href="../index.html" style="text-decoration: none; color: inherit;">
+                    Jérémy <span>Piton</span>
+                </a>
+            </div>
             <div class="nav-links">
                 <a href="./about.html">À propos</a>
                 <a href="./projet.html">Projets</a>
                 <a href="./bilan.html">Bilan</a>
-                <a href="./contact.html" style="color: #60a5fa;" class="active">Contact</a>
+                <a href="./contact.html" class="active">Contact</a>
             </div>
         </nav>
     </header>
@@ -425,8 +426,8 @@
             </div>
         </section>
 
-        <!-- Section Contact existante -->
-        <section class="content-grid">
+        <!-- Section Contact -->
+        <section class="contact-section">
             <div class="contact-info">
                 <h2>Mes informations</h2>
                 
@@ -434,7 +435,7 @@
                     <div class="info-icon">📧</div>
                     <div class="info-text">
                         <h3>Email</h3>
-                        <p><a href="mailto:jeremy.piton@example.com">jeremy.piton@example.com</a></p>
+                        <p><a href="mailto:jmyptn@gmail.com">jmyptn@gmail.com</a></p>
                     </div>
                 </div>
                 
@@ -451,7 +452,7 @@
                     <div class="info-icon">💼</div>
                     <div class="info-text">
                         <h3>LinkedIn</h3>
-                        <p><a href="#" target="_blank">Mon profil professionnel</a></p>
+                        <p><a href="https://www.linkedin.com/in/j%C3%A9r%C3%A9my-piton-b1ab8a340/" target="_blank">Mon profil professionnel</a></p>
                     </div>
                 </div>
                 
@@ -459,7 +460,7 @@
                     <div class="info-icon">💻</div>
                     <div class="info-text">
                         <h3>GitHub</h3>
-                        <p><a href="#" target="_blank">Mes projets et code</a></p>
+                        <p><a href="https://github.com/butsdjeremypiton" target="_blank">Mes projets et code</a></p>
                     </div>
                 </div>
                 
@@ -473,52 +474,13 @@
                 </div>
                 
                 <div class="availability">
-                    <h3>🎯 Disponibilité</h3>
-                    <p>Je recherche activement une alternance en data science ou data analysis à partir de la deuxième année de mon BUT. Période idéale : septembre 2025.</p>
+                    <h3>✅ Statut</h3>
+                    <p>Actuellement en alternance en data science pour ma deuxième année de BUT. Toujours ouvert aux opportunités de collaboration et aux projets intéressants.</p>
                 </div>
-            </div>
-            
-            <div class="contact-form">
-                <h2>Envoyez-moi un message</h2>
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Nom complet *</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email *</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="company">Entreprise / Organisation</label>
-                        <input type="text" id="company" name="company">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="subject">Sujet *</label>
-                        <select id="subject" name="subject" required>
-                            <option value="">Choisissez un sujet</option>
-                            <option value="alternance">Opportunité d'alternance</option>
-                            <option value="stage">Proposition de stage</option>
-                            <option value="projet">Collaboration sur un projet</option>
-                            <option value="conseil">Demande de conseil</option>
-                            <option value="autre">Autre</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Message *</label>
-                        <textarea id="message" name="message" placeholder="Décrivez votre demande, votre entreprise, le type de mission proposée..." required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">Envoyer le message</button>
-                </form>
             </div>
         </section>
     </div>
-    
+
     <footer>
         <p>© 2025 Jérémy Piton - Tous droits réservés</p>
         <p>Portfolio personnel - Étudiant en Science des données</p>
@@ -528,29 +490,5 @@
             <a href="mailto:jmyptn@gmail.com">Email</a>
         </div>
     </footer>
-    
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Récupération des données du formulaire
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-            
-            // Simulation d'envoi (remplacez par votre logique d'envoi réelle)
-            const submitBtn = document.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            
-            submitBtn.textContent = 'Envoi en cours...';
-            submitBtn.disabled = true;
-            
-            setTimeout(() => {
-                alert('Merci pour votre message ! Je vous répondrai dans les plus brefs délais.');
-                this.reset();
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }, 1500);
-        });
-    </script>
 </body>
 </html>
